@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Job Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #336659;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    form {
+      background: white;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #336659;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #eee;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Apply for a Role at Bruno's Hotel</h1>
+  </header>
+
+  <form id="jobForm">
+    <h2>Job Application Form</h2>
+
+    <input type="text" name="fullname" placeholder="Full Name" required />
+
+    <select name="role" required>
+      <option value="">Select a Role</option>
+      <option>Room Keeping</option>
+      <option>Chef</option>
+      <option>Manager</option>
+      <option>Waitress</option>
+      <option>Receptionist</option>
+      <option>Spa Attendant</option>
+    </select>
+
+    <textarea name="why" placeholder="Why would you be a good candidate?" required></textarea>
+
+    <textarea name="history" placeholder="What's your past history of this work?" required></textarea>
+
+    <textarea name="motivation" placeholder="Motivation Letter (at least 50 words)" minlength="50" required></textarea>
+
+    <label>Upload your CV (.zpd file only):</label>
+    <input type="file" id="cvUpload" accept=".PDF" required />
+
+    <button type="submit">Submit Application</button>
+  </form>
+
+  <footer>
+    © 2025 Bruno's Hotel | Roblox Roleplay Paradise
+  </footer>
+
+  <script>
+    document.getElementById("jobForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const fileInput = document.getElementById("cvUpload");
+
+      if (!fileInput.files[0]) {
+        alert("Please upload your .zpd CV file.");
+        return;
+      }
+
+      // Collect text data
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+      formData.append("payload_json", JSON.stringify({
+        embeds: [{
+          title: "📄 New Job Application",
+          color: 3447003,
+          fields: [
+            { name: "Full Name", value: form.fullname.value, inline: true },
+            { name: "Role", value: form.role.value, inline: true },
+            { name: "Why a Good Candidate?", value: form.why.value },
+            { name: "Work History", value: form.history.value },
+            { name: "Motivation Letter", value: form.motivation.value }
+          ],
+          timestamp: new Date().toISOString()
+        }]
+      }));
+
+      const webhookURL = "https://discord.com/api/webhooks/1374837345915764868/VXSgWQkohhPajzJvIfnBfnCkFGovvR6xEgLzje85oAnSSfLw7dCQNc8yqQA3Tf0USwTD"; // ← Replace with your actual Discord webhook URL
+
+      try {
+        await fetch(webhookURL, {
+          method: "POST",
+          body: formData
+        });
+        alert("Application submitted successfully ✅");
+        form.reset();
+      } catch (err) {
+        console.error("Submission error:", err);
+        alert("❌ Application failed to send.");
+      }
+    });
+  </script>
+
+</body>
+</html>
