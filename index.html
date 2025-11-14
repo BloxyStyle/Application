@@ -63,7 +63,7 @@
     <h2>Job Application Form</h2>
 
     <input type="text" name="fullname" placeholder="Roblox Username" required />
-
+      <input type="text" name="fullname2" placeholder="Discord Username" required />
     <select name="role" required>
       <option value="">Select a Role</option>
       <option>Housekeeping</option>
@@ -101,7 +101,8 @@
           title: "📄 New Job Application",
           color: 3447003,
           fields: [
-            { name: "Full Name", value: form.fullname.value, inline: true },
+            { name: "Roblox Name", value: form.fullname.value, inline: true },
+              { name: "Discord Name", value: form.fullname2.value, inline: true },
             { name: "Role", value: form.role.value, inline: true },
             { name: "Why a Good Candidate?", value: form.why.value },
             { name: "Work History", value: form.history.value },
