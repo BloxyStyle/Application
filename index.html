@@ -83,9 +83,6 @@
 
     <textarea name="motivation" placeholder="Motivation Letter (at least 50 words)" minlength="50" required></textarea>
 
-    <label>Upload your CV (.PDF file only):</label>
-    <input type="file" id="cvUpload" accept=".PDF" required />
-
     <button type="submit">Submit Application</button>
   </form>
 
@@ -98,17 +95,8 @@
       e.preventDefault();
 
       const form = e.target;
-      const fileInput = document.getElementById("cvUpload");
 
-      if (!fileInput.files[0]) {
-        alert("Please upload your .zpd CV file.");
-        return;
-      }
-
-      // Collect text data
-      const formData = new FormData();
-      formData.append("file", fileInput.files[0]);
-      formData.append("payload_json", JSON.stringify({
+      const payload = {
         embeds: [{
           title: "📄 New Job Application",
           color: 3447003,
@@ -121,17 +109,20 @@
           ],
           timestamp: new Date().toISOString()
         }]
-      }));
+      };
 
-      const webhookURL = "https://discord.com/api/webhooks/1374837345915764868/VXSgWQkohhPajzJvIfnBfnCkFGovvR6xEgLzje85oAnSSfLw7dCQNc8yqQA3Tf0USwTD"; // ← Replace with your actual Discord webhook URL
+      const webhookURL = "https://discord.com/api/webhooks/1374837345915764868/VXSgWQkohhPajzJvIfnBfnCkFGovvR6xEgLzje85oAnSSfLw7dCQNc8yqQA3Tf0USwTD";
 
       try {
         await fetch(webhookURL, {
           method: "POST",
-          body: formData
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
         });
+
         alert("Application submitted successfully ✅");
         form.reset();
+
       } catch (err) {
         console.error("Submission error:", err);
         alert("❌ Application failed to send.");
