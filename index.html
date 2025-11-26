@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <div style="width:100%; height:300px; overflow:hidden;">
+    <img src="https://uploads.onecompiler.io/445rnxgdz/445rm4tb9/wearehiring.png" alt="Hotel Image" style="width:100%; height:100%; object-fit:cover;">
+  </div>
   <title>Hotel Job Application</title>
   <style>
     body {
@@ -11,12 +14,7 @@
       margin: 0;
       padding: 0;
     }
-    header {
-      background-color: #336659;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
+   
     form {
       background: white;
       max-width: 600px;
@@ -39,10 +37,10 @@
     button {
       width: 100%;
       padding: 1rem;
-      background: #007BFF;
+      background:  #F4800B;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 12px;
       font-size: 1rem;
     }
     footer {
@@ -55,26 +53,25 @@
 </head>
 <body>
 
-  <header>
-    <h1>Apply for a Role at Riverside Hotel</h1>
-  </header>
+ 
 
   <form id="jobForm">
     <h2>Job Application Form</h2>
 
     <input type="text" name="fullname" placeholder="Roblox Username" required />
-      <input type="text" name="fullname2" placeholder="Discord Username" required />
-    <select name="role" required>
+    <input type="text" name="fullname2" placeholder="Discord Username" required />
+
+    <select name="role" id="roleSelect" required>
       <option value="">Select a Role</option>
       <option>Senior Housekeeper</option>
       <option>Senior Chef</option>
       <option>Senior Waitress</option>
       <option>Senior Receptionist</option>
       <option>Spa Receptionist</option>
-       <option>Spa Manager</option>
-       <option>Front Office Manager</option>
-       <option>Restaurant Manager</option>
-       <option>Housekeeping Manager</option>
+      <option>Spa Manager</option>
+      <option>Front Office Manager</option>
+      <option>Restaurant Manager</option>
+      <option>Housekeeping Manager</option>
     </select>
 
     <textarea name="why" placeholder="Why would you be a good candidate?" required></textarea>
@@ -86,11 +83,103 @@
     <button type="submit">Submit Application</button>
   </form>
 
+  <!-- Manager Role Notice Modal -->
+  <div id="managerModal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+    <div style="background:white; padding:20px; border-radius:10px; max-width:400px; text-align:center; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+      <h3>⚠ Manager Role Selected</h3>
+     <p> </p>
+      <p><strong>Manager Role Requirements:</strong><br>
+       <p> </p>
+      • Requires two interview stages.<br>
+       <p> </p>
+      • You must be consistently active and available when needed.<br>
+       <p> </p>
+      • Strong leadership and professionalism are expected.</p>
+      <button id="closeModal" style="margin-top:10px; padding:10px 20px; background:#F4800B; color:white; border:none; border-radius:8px;">Close</button>
+    </div>
+  </div>
+
+<!-- Senior Staff Notice Modal -->
+  <div id="seniorModal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+    <div style="background:white; padding:20px; border-radius:10px; max-width:400px; text-align:center; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+      <h3>ℹ Senior Staff Role Selected</h3>
+      <p><strong>Senior Staff Requirements:</strong><br>
+      • High activity and professionalism required.<br>
+      • Strong teamwork and reliability expected.<br>
+      • Recommended to have previous experience in the department.<br>
+      • Senior staff must support junior employees and uphold hotel standards.</p>
+      <button id="closeSeniorModal" style="margin-top:10px; padding:10px 20px; background:#F4800B; color:white; border:none; border-radius:8px;">Close</button>
+    </div>
+  </div>
+  
   <footer>
-    © 2025 Bruno's Hotel | Roblox Roleplay Paradise
+    © 2025 Riverside Hotel & SPA | Job Application Roleplay
   </footer>
 
   <script>
+    const roleSelect = document.getElementById("roleSelect");
+
+    roleSelect.addEventListener("change", function () {
+      const managerRoles = [
+        "Spa Manager",
+        "Front Office Manager",
+        "Restaurant Manager",
+        "Housekeeping Manager"
+      ];
+
+      const seniorRoles = [
+        "Senior Housekeeper",
+        "Senior Chef",
+        "Senior Waitress",
+        "Senior Receptionist"
+      ];
+
+      const managerModal = document.getElementById('managerModal');
+      const seniorModal = document.getElementById('seniorModal');
+
+      if (managerRoles.includes(this.value)) {
+        managerModal.style.display = 'flex';
+      } else if (seniorRoles.includes(this.value)) {
+        seniorModal.style.display = 'flex';
+      }
+    });
+
+    document.getElementById('closeModal').addEventListener('click', function () {
+      document.getElementById('managerModal').style.display = 'none';
+    });
+
+    document.getElementById('closeSeniorModal').addEventListener('click', function () {
+      document.getElementById('seniorModal').style.display = 'none';
+    });("change", function () {
+      const managerRoles = [
+        "Spa Manager",
+        "Front Office Manager",
+        "Restaurant Manager",
+        "Housekeeping Manager"
+      ];
+
+      const modal = document.getElementById('managerModal');
+
+      if (managerRoles.includes(this.value)) {
+        modal.style.display = 'flex';
+      }
+    });
+
+    document.getElementById('closeModal').addEventListener('click', function () {
+      document.getElementById('managerModal').style.display = 'none';
+    });("change", function () {
+      const managerRoles = [
+        "Spa Manager",
+        "Front Office Manager",
+        "Restaurant Manager",
+        "Housekeeping Manager"
+      ];
+
+      if (managerRoles.includes(this.value)) {
+        alert("⚠ Manager Role Selected! If you select a Manager rank, you will have 2 interviews and must be active and available 24/7 when needed.");
+      }
+    });
+
     document.getElementById("jobForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
@@ -102,7 +191,7 @@
           color: 3447003,
           fields: [
             { name: "Roblox Name", value: form.fullname.value, inline: true },
-              { name: "Discord Name", value: form.fullname2.value, inline: true },
+            { name: "Discord Name", value: form.fullname2.value, inline: true },
             { name: "Role", value: form.role.value, inline: true },
             { name: "Why a Good Candidate?", value: form.why.value },
             { name: "Work History", value: form.history.value },
@@ -130,6 +219,8 @@
       }
     });
   </script>
+
+  
 
 </body>
 </html>
